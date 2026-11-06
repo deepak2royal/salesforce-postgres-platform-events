@@ -1,0 +1,43 @@
+### Public health check
+GET http://localhost:8080/actuator/health
+
+### Obtain OAuth2 access token (Basic Auth)
+### Username: salesforce-client
+### Password: local-dev-secret-change-me
+POST http://localhost:8080/oauth2/token
+Authorization: Basic c2FsZXNmb3JjZS1jbGllbnQ6bG9jYWwtZGV2LXNlY3JldC1jaGFuZ2UtbWU=
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=client_credentials&scope=odata.read
+
+### Replace TOKEN with access_token returned above
+GET http://localhost:8080/odata/
+Authorization: Bearer TOKEN
+
+###
+GET http://localhost:8080/odata/$metadata
+Authorization: Bearer TOKEN
+
+###
+GET http://localhost:8080/odata/CustomerOrders
+Authorization: Bearer TOKEN
+
+###
+GET http://localhost:8080/odata/CustomerOrders?$filter=CustomerId%20eq%20'CUST-1001'&$top=50&$skip=0
+Authorization: Bearer TOKEN
+
+###
+GET http://localhost:8080/odata/CustomerOrders('ORD-1001')
+Authorization: Bearer TOKEN
+
+###
+GET http://localhost:8080/api/orders
+Authorization: Bearer TOKEN
+
+###
+GET http://localhost:8080/api/orders/customer/CUST-1001
+Authorization: Bearer TOKEN
+
+###
+GET http://localhost:8080/api/orders/ORD-1001
+Authorization: Bearer TOKEN
